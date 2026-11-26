@@ -11,8 +11,14 @@ load_dotenv()
 app = FastAPI(title="RentReady API", description="UK housing information assistant", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("FRONTEND_ORIGIN", "http://localhost:5173"), "http://localhost:3000"],
-    allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["Content-Type"]
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
+    ],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"]
 )
 app.include_router(affordability_router, prefix="/api/affordability", tags=["Affordability"])
 app.include_router(tenancy_router, prefix="/api/tenancy", tags=["Tenancy"])
